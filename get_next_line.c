@@ -6,23 +6,34 @@
 /*   By: eturini <eturini@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/08 17:32:58 by eturini           #+#    #+#             */
-/*   Updated: 2025/12/09 18:54:47 by eturini          ###   ########.fr       */
+/*   Updated: 2025/12/10 18:59:50 by eturini          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-#ifndef BUFFER_SIZE
-# define BUFFER_SIZE 42
-#endif
-
 char	*get_next_line(int fd)
 {
-	static char buffer[BUFFER_SIZE];
+	static char *buffer;
+	char		*temp_buf;
+	size_t		i;
 
-	if (BUFFER_SIZE <= 0 || read(fd, buffer, BUFFER_SIZE) != -1)
-		return (NULL);
-	return (buffer);
+	i = BUFFER_SIZE;
+	buffer = (char *)ft_calloc(1, i + 1);
+	while (find_newline(buffer, i) == FALSE && i > 0 && read(fd, buffer + (i - BUFFER_SIZE), BUFFER_SIZE) != -1)
+	{
+		i += BUFFER_SIZE;
+		temp_buf = buffer;
+		buffer = (char *)ft_calloc(1, i);
+		ft_memmove(buffer, temp_buf, i);
+		free(temp_buf);
+	}
+	if (!temp_buf)
+		free(temp_buf);
+	temp_buf = buffer;
+	buffer += find_newline(temp_buf, i);
+	printf("\nbuffer: %s\n",buffer);
+	return (format_string(temp_buf));
 }
 
 #include <fcntl.h>
@@ -30,7 +41,9 @@ char	*get_next_line(int fd)
 int main(){
 	int fd;
 
-	if ((fd = open("text.txt", O_RDONLY | O_CREAT)) == -1)
+	if ((fd = open("text.txt", O_RDONLY)) == -1)
 		return -1;
-	printf("%s \n", get_next_line(fd));
+	printf(">%s<\n", get_next_line(fd));
+	printf(">%s<\n", get_next_line(fd));
+	printf(">%s<\n", get_next_line(fd));
 }
