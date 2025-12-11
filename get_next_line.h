@@ -6,7 +6,7 @@
 /*   By: eturini <eturini@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/08 17:32:55 by eturini           #+#    #+#             */
-/*   Updated: 2025/12/10 18:58:45 by eturini          ###   ########.fr       */
+/*   Updated: 2025/12/11 13:28:29 by eturini          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,9 @@
 char	*get_next_line(int fd);
 void	*ft_memmove(void *dest, const void *src, size_t n);
 void	*ft_calloc(size_t nmemb, size_t size);
-size_t	find_newline(const char *s, size_t n);
+long	find_newline(const char *s, size_t n);
 char	*format_string(char *s);
+char	*setup_next_line(char *s);
+char	*setup_new_buffer(char *buffer, size_t *offset, int fd);
 
 #endif

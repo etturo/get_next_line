@@ -6,7 +6,7 @@
 /*   By: eturini <eturini@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/08 17:33:00 by eturini           #+#    #+#             */
-/*   Updated: 2025/12/10 18:58:51 by eturini          ###   ########.fr       */
+/*   Updated: 2025/12/11 15:31:24 by eturini          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,18 +52,18 @@ void	*ft_calloc(size_t nmemb, size_t size)
 	return (s);
 }
 
-size_t	find_newline(const char *s, size_t n)
+long	find_newline(const char *s, size_t n)
 {
 	size_t	i;
 
 	i = 0;
-	while (s[i] != EOF && i < n)
+	while (i < n && s[i])
 	{
 		if (s[i] == '\n')
 			return i;
 		i++;
 	}
-	return FALSE;
+	return (-1);
 }
 
 char	*format_string(char *s)
@@ -72,13 +72,32 @@ char	*format_string(char *s)
 	size_t	i;
 
 	i = 0;
-	while (s[i] != EOF && s[i] != '\n')
+	while (s[i] != '\n')
 		i++;
 	form_str = (char *)ft_calloc(i + 1, sizeof(char));
 	if (!form_str)
 		return NULL;
 	ft_memmove(form_str, s, i);
-	if (s[i] == EOF)
-		free(s);
+	free(s);
 	return form_str;
+}
+
+char	*setup_next_line(char *s)
+{
+	char	*new_buf;
+	size_t	start;
+	size_t	len;
+
+	start = -1;
+	len = 0;
+	while (s[++start] != '\n' && s[start])
+		len++;
+	while (s[len])
+		len++;
+	new_buf = (char *)ft_calloc(len - start, sizeof(char *));
+	if (!new_buf)
+		return NULL;
+	ft_memmove(new_buf, &s[start + 1], len - start);
+	free(s);
+	return (new_buf);
 }
