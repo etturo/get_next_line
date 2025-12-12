@@ -6,7 +6,7 @@
 /*   By: eturini <eturini@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/08 17:32:55 by eturini           #+#    #+#             */
-/*   Updated: 2025/12/11 13:28:29 by eturini          ###   ########.fr       */
+/*   Updated: 2025/12/12 14:42:49 by eturini          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@
 # include <unistd.h>
 # include <stdio.h>
 # include <stddef.h>
+# include <limits.h>
 
 # define TRUE 1
 # define FALSE 0
@@ -29,8 +30,7 @@ char	*get_next_line(int fd);
 void	*ft_memmove(void *dest, const void *src, size_t n);
 void	*ft_calloc(size_t nmemb, size_t size);
 long	find_newline(const char *s, size_t n);
-char	*format_string(char *s);
-char	*setup_next_line(char *s);
-char	*setup_new_buffer(char *buffer, size_t *offset, int fd);
+char	*setup_new_buffer(char **buffer, int fd, long *offset);
+char	*set_next_buffer(char **buffer, size_t len);
 
 #endif

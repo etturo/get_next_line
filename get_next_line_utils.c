@@ -6,7 +6,7 @@
 /*   By: eturini <eturini@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/08 17:33:00 by eturini           #+#    #+#             */
-/*   Updated: 2025/12/11 15:43:26 by eturini          ###   ########.fr       */
+/*   Updated: 2025/12/12 15:16:29 by eturini          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,38 +66,45 @@ long	find_newline(const char *s, size_t n)
 	return (-1);
 }
 
-char	*format_string(char *s)
+// this function takes the buffer and set for the next iteration
+// also trim the strign to return reaching the new line
+char	*set_next_buffer(char **buffer, size_t len)
 {
-	char	*form_str;
-	size_t	i;
+	char	*format_buff;
+	char	*temp_buf;
 
-	i = 0;
-	while (s[i] != '\n')
-		i++;
-	form_str = (char *)ft_calloc(i + 1, sizeof(char));
-	if (!form_str)
+	temp_buf = *buffer;
+	format_buff = (char *)ft_calloc(find_newline(temp_buf, len) + 1, sizeof(char));
+	if (!format_buff)
 		return NULL;
-	ft_memmove(form_str, s, i);
-	free(s);
-	return form_str;
+	ft_memmove(format_buff, temp_buf, find_newline(temp_buf, len));
+	*buffer = (char *)ft_calloc(len - find_newline(temp_buf, len) + 1, sizeof(char));
+	if (!*buffer)
+		return NULL;
+	ft_memmove(*buffer, temp_buf + find_newline(temp_buf, len) + 1, len - find_newline(temp_buf, len));
+	free(temp_buf);
+	return (format_buff);
 }
 
-char	*setup_next_line(char *s)
+char	*setup_new_buffer(char **buffer, int fd, long *offset)
 {
-	char	*new_buf;
-	size_t	start;
-	size_t	len;
+	char	*temp_buf;
 
-	start = -1;
-	len = 0;
-	while (s[++start] != '\n' && s[start])
-		len++;
-	while (s[len])
-		len++;
-	new_buf = (char *)ft_calloc(len - start, sizeof(char *));
-	if (!new_buf)
+	if (*buffer == NULL)
+	{
+		*offset = 0;
+		*buffer = (char *)ft_calloc(BUFFER_SIZE, sizeof(char));
+		if (!*buffer)
 		return NULL;
-	ft_memmove(new_buf, &s[start + 1], len - start);
-	free(s);
-	return (new_buf);
+		if (read(fd, *buffer, BUFFER_SIZE) > 0)
+			return *buffer;
+		return NULL;
+	}
+	while ((*buffer)[*offset])
+		(*offset)++;
+	temp_buf = *buffer;
+	*buffer = (char *)ft_calloc(BUFFER_SIZE + *offset + 1, sizeof(char));
+	ft_memmove(*buffer, temp_buf, *offset);
+	read(fd, *buffer + *offset, BUFFER_SIZE);
+	return *buffer;
 }
