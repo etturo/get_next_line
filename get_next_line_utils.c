@@ -6,7 +6,7 @@
 /*   By: eturini <eturini@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/08 17:33:00 by eturini           #+#    #+#             */
-/*   Updated: 2025/12/12 15:16:29 by eturini          ###   ########.fr       */
+/*   Updated: 2025/12/13 15:37:21 by eturini          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,14 +74,14 @@ char	*set_next_buffer(char **buffer, size_t len)
 	char	*temp_buf;
 
 	temp_buf = *buffer;
-	format_buff = (char *)ft_calloc(find_newline(temp_buf, len) + 1, sizeof(char));
+	format_buff = (char *)ft_calloc(find_newline(temp_buf, len) + 2, sizeof(char));
 	if (!format_buff)
 		return NULL;
-	ft_memmove(format_buff, temp_buf, find_newline(temp_buf, len));
+	ft_memmove(format_buff, temp_buf, find_newline(temp_buf, len) + 1);
 	*buffer = (char *)ft_calloc(len - find_newline(temp_buf, len) + 1, sizeof(char));
 	if (!*buffer)
-		return NULL;
-	ft_memmove(*buffer, temp_buf + find_newline(temp_buf, len) + 1, len - find_newline(temp_buf, len));
+		return free_for_all(format_buff);
+	ft_memmove(*buffer, temp_buf + find_newline(temp_buf, len) + 1, len - find_newline(temp_buf, len) - 1);
 	free(temp_buf);
 	return (format_buff);
 }
@@ -95,7 +95,7 @@ char	*setup_new_buffer(char **buffer, int fd, long *offset)
 		*offset = 0;
 		*buffer = (char *)ft_calloc(BUFFER_SIZE, sizeof(char));
 		if (!*buffer)
-		return NULL;
+			return NULL;
 		if (read(fd, *buffer, BUFFER_SIZE) > 0)
 			return *buffer;
 		return NULL;
@@ -104,7 +104,10 @@ char	*setup_new_buffer(char **buffer, int fd, long *offset)
 		(*offset)++;
 	temp_buf = *buffer;
 	*buffer = (char *)ft_calloc(BUFFER_SIZE + *offset + 1, sizeof(char));
+	if (!*buffer)
+		return free_for_all(temp_buf);
 	ft_memmove(*buffer, temp_buf, *offset);
+	free_for_all(temp_buf);
 	read(fd, *buffer + *offset, BUFFER_SIZE);
 	return *buffer;
 }

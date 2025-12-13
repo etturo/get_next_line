@@ -6,12 +6,12 @@
 /*   By: eturini <eturini@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/08 17:32:55 by eturini           #+#    #+#             */
-/*   Updated: 2025/12/12 14:42:49 by eturini          ###   ########.fr       */
+/*   Updated: 2025/12/13 15:27:33 by eturini          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef BUFFER_SIZE
-# define BUFFER_SIZE 10
+# define BUFFER_SIZE 10000000
 #endif
 
 #ifndef GET_NEXT_LINE_H
@@ -32,5 +32,6 @@ void	*ft_calloc(size_t nmemb, size_t size);
 long	find_newline(const char *s, size_t n);
 char	*setup_new_buffer(char **buffer, int fd, long *offset);
 char	*set_next_buffer(char **buffer, size_t len);
+void	*free_for_all(void *buffer);
 
 #endif
