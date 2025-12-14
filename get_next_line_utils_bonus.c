@@ -6,7 +6,7 @@
 /*   By: eturini <eturini@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/14 17:43:51 by eturini           #+#    #+#             */
-/*   Updated: 2025/12/14 19:03:45 by eturini          ###   ########.fr       */
+/*   Updated: 2025/12/14 21:37:50 by eturini          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,5 +57,5 @@ char	*free_for_all(char **buffer)
 {
 	free(*buffer);
 	*buffer = NULL;
-	return NULL;
+	return (NULL);
 }
