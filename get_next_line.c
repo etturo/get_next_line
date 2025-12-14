@@ -6,7 +6,7 @@
 /*   By: eturini <eturini@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/14 17:43:33 by eturini           #+#    #+#             */
-/*   Updated: 2025/12/14 18:22:31 by eturini          ###   ########.fr       */
+/*   Updated: 2025/12/14 18:30:49 by eturini          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,10 +17,10 @@ char	*get_next_line(int fd)
 	static char	*stash;
 	char		*line;
 
-	if (fd < 0 || BUFFER_SIZE <=0)
-		return NULL;
+	if (fd < 0 || BUFFER_SIZE <= 0)
+		return (NULL);
 	line = read_new_line(fd, &stash);
-	return line;
+	return (line);
 }
 
 char	*read_new_line(int fd, char **stash)
@@ -33,8 +33,8 @@ char	*read_new_line(int fd, char **stash)
 	while (find_nl(*stash) == -1 && red_bytes != 0)
 	{
 		red_bytes = read(fd, buffer, BUFFER_SIZE);
-		if (red_bytes == - 1)
-			return free_for_all(&buffer);
+		if (red_bytes == -1)
+			return (free_for_all(&buffer));
 		if (red_bytes == 0)
 			break ;
 		buffer[red_bytes] = '\0';
@@ -44,15 +44,14 @@ char	*read_new_line(int fd, char **stash)
 	return (get_line(stash));
 }
 
-
 char	*get_line(char **stash)
 {
 	char	*buffer;
 	long	nl_len;
 	long	i;
-	
+
 	if (!(*stash) || !(*stash)[0])
-		return free_for_all(stash);
+		return (free_for_all(stash));
 	nl_len = find_nl(*stash);
 	if (nl_len == -1)
 	{
@@ -62,7 +61,7 @@ char	*get_line(char **stash)
 	}
 	buffer = (char *)malloc(sizeof(char) * (nl_len + 2));
 	if (!buffer)
-		return free_for_all(stash);
+		return (free_for_all(stash));
 	i = -1;
 	while (++i < nl_len)
 		buffer[i] = (*stash)[i];
@@ -70,7 +69,7 @@ char	*get_line(char **stash)
 		buffer[i++] = '\n';
 	buffer[i] = '\0';
 	set_next_stash(stash);
-	return buffer;
+	return (buffer);
 }
 
 char	*set_next_stash(char **stash)
@@ -78,18 +77,18 @@ char	*set_next_stash(char **stash)
 	char	*next_stash;
 	long	len;
 	long	i;
-	
+
 	len = 0;
 	while ((*stash)[len] && (*stash)[len] != '\n')
 		len++;
 	if (!(*stash)[len])
-		return free_for_all(stash);
+		return (free_for_all(stash));
 	i = 0;
 	while ((*stash)[len + i + 1])
 		i++;
 	next_stash = (char *)malloc(sizeof(char) * (i + 1));
 	if (!next_stash)
-		return NULL;
+		return (NULL);
 	i = 0;
 	len++;
 	while ((*stash)[len])
@@ -97,7 +96,7 @@ char	*set_next_stash(char **stash)
 	next_stash[i] = '\0';
 	free(*stash);
 	*stash = next_stash;
-	return NULL;
+	return (NULL);
 }
 /* 
 #include <fcntl.h>
