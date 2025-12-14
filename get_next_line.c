@@ -6,7 +6,7 @@
 /*   By: eturini <eturini@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/14 17:43:33 by eturini           #+#    #+#             */
-/*   Updated: 2025/12/14 18:05:14 by eturini          ###   ########.fr       */
+/*   Updated: 2025/12/14 18:22:31 by eturini          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,7 @@ char	*set_next_stash(char **stash)
 	*stash = next_stash;
 	return NULL;
 }
-
+/* 
 #include <fcntl.h>
 
 int main(){
@@ -116,3 +116,4 @@ int main(){
 	}
 	printf("\n");
 }
+ */
