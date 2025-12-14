@@ -74,6 +74,7 @@ Each index of this array corresponds to a file descriptor, allowing the function
 - [man read(2)](https://man7.org/linux/man-pages/man2/read.2.html)
 - [man malloc(3)](https://man7.org/linux/man-pages/man3/malloc.3.html)
 - [File Descriptors explained](https://en.wikipedia.org/wiki/File_descriptor)
+- [File Descriptors max explained](https://www.ibm.com/docs/en/itcam-app-mgr/7.2.1?topic=luic-file-descriptor-maxfiles-limit-unix-linux-systems-1)
 
 ### AI Usage
 Artificial Intelligence was used in this project for the following task:
