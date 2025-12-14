@@ -6,7 +6,7 @@
 /*   By: eturini <eturini@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/14 17:43:33 by eturini           #+#    #+#             */
-/*   Updated: 2025/12/14 18:02:47 by eturini          ###   ########.fr       */
+/*   Updated: 2025/12/14 18:05:14 by eturini          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,13 +100,13 @@ char	*set_next_stash(char **stash)
 	return NULL;
 }
 
-/* #include <fcntl.h>
+#include <fcntl.h>
 
 int main(){
 	int fd;
 	char *line;
 
-	if ((fd = open("files/41_no_nl", O_RDONLY)) == -1)
+	if ((fd = open("files/big_line_no_nl", O_RDONLY)) == -1)
 		return -1;
 	while ((line = get_next_line(fd)) != NULL)
 	{
@@ -116,4 +116,3 @@ int main(){
 	}
 	printf("\n");
 }
- */
