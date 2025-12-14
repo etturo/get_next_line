@@ -6,12 +6,12 @@
 /*   By: eturini <eturini@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/08 17:32:55 by eturini           #+#    #+#             */
-/*   Updated: 2025/12/13 15:27:33 by eturini          ###   ########.fr       */
+/*   Updated: 2025/12/14 17:51:17 by eturini          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef BUFFER_SIZE
-# define BUFFER_SIZE 10000000
+# define BUFFER_SIZE 1
 #endif
 
 #ifndef GET_NEXT_LINE_H
@@ -27,11 +27,11 @@
 # define FALSE 0
 
 char	*get_next_line(int fd);
-void	*ft_memmove(void *dest, const void *src, size_t n);
-void	*ft_calloc(size_t nmemb, size_t size);
-long	find_newline(const char *s, size_t n);
-char	*setup_new_buffer(char **buffer, int fd, long *offset);
-char	*set_next_buffer(char **buffer, size_t len);
-void	*free_for_all(void *buffer);
+char	*read_new_line(int fd, char **stash);
+char	*get_line(char **stash);
+char	*set_next_stash(char **stash);
+char	*ft_strjoin(char *s1, char *s2);
+char	*free_for_all(char **buffer);
+int		find_nl(char *s);
 
 #endif

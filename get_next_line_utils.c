@@ -5,109 +5,57 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: eturini <eturini@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/12/08 17:33:00 by eturini           #+#    #+#             */
-/*   Updated: 2025/12/13 15:37:21 by eturini          ###   ########.fr       */
+/*   Created: 2025/12/14 17:43:51 by eturini           #+#    #+#             */
+/*   Updated: 2025/12/14 17:45:01 by eturini          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-void	*ft_memmove(void *dest, const void *src, size_t n)
+char	*ft_strjoin(char *s1, char *s2)
 {
-	char	*s;
-	char	*d;
+	size_t	len1;
+	size_t	len2;
+	size_t	i;
+	char	*new_s;
 
-	if (src > dest)
-	{
-		s = (char *)src;
-		d = (char *)dest;
-		while (n--)
-			*d++ = *s++;
-	}
-	else
-	{
-		s = (char *)src + n;
-		d = (char *)dest + n;
-		while (n--)
-			*--d = *--s;
-	}
-	return (dest);
+	len1 = 0;
+	if (s1)
+		while (s1[len1])
+			len1++;
+	len2 = 0;
+	while (s2[len2])
+		len2++;
+	new_s = malloc(len1 + len2 + 1);
+	if (!new_s)
+		return ((void *)0);
+	i = -1;
+	while (++i < len1)
+		new_s[i] = s1[i];
+	i -= 1;
+	while (++i < len1 + len2)
+		new_s[i] = s2[i - len1];
+	new_s[len1 + len2] = '\0';
+	free(s1);
+	return (new_s);
 }
 
-void	*ft_calloc(size_t nmemb, size_t size)
+int	find_nl(char *s)
 {
-	char	*s;
 	size_t	i;
 
-	if (nmemb == 0 || size == 0)
-		return (malloc(0));
-	if (nmemb > __SIZE_MAX__ / size)
-		return ((void *)0);
-	s = (char *)malloc(size * nmemb);
 	if (!s)
-		return ((void *)0);
-	i = 0;
-	while (i < (size * nmemb))
-		((char *)s)[i++] = 0;
-	return (s);
-}
-
-long	find_newline(const char *s, size_t n)
-{
-	size_t	i;
-
-	i = 0;
-	while (i < n && s[i])
-	{
+		return (-1);
+	i = -1;
+	while (s[++i])
 		if (s[i] == '\n')
-			return i;
-		i++;
-	}
+			return (i);
 	return (-1);
 }
 
-// this function takes the buffer and set for the next iteration
-// also trim the strign to return reaching the new line
-char	*set_next_buffer(char **buffer, size_t len)
+char	*free_for_all(char **buffer)
 {
-	char	*format_buff;
-	char	*temp_buf;
-
-	temp_buf = *buffer;
-	format_buff = (char *)ft_calloc(find_newline(temp_buf, len) + 2, sizeof(char));
-	if (!format_buff)
-		return NULL;
-	ft_memmove(format_buff, temp_buf, find_newline(temp_buf, len) + 1);
-	*buffer = (char *)ft_calloc(len - find_newline(temp_buf, len) + 1, sizeof(char));
-	if (!*buffer)
-		return free_for_all(format_buff);
-	ft_memmove(*buffer, temp_buf + find_newline(temp_buf, len) + 1, len - find_newline(temp_buf, len) - 1);
-	free(temp_buf);
-	return (format_buff);
-}
-
-char	*setup_new_buffer(char **buffer, int fd, long *offset)
-{
-	char	*temp_buf;
-
-	if (*buffer == NULL)
-	{
-		*offset = 0;
-		*buffer = (char *)ft_calloc(BUFFER_SIZE, sizeof(char));
-		if (!*buffer)
-			return NULL;
-		if (read(fd, *buffer, BUFFER_SIZE) > 0)
-			return *buffer;
-		return NULL;
-	}
-	while ((*buffer)[*offset])
-		(*offset)++;
-	temp_buf = *buffer;
-	*buffer = (char *)ft_calloc(BUFFER_SIZE + *offset + 1, sizeof(char));
-	if (!*buffer)
-		return free_for_all(temp_buf);
-	ft_memmove(*buffer, temp_buf, *offset);
-	free_for_all(temp_buf);
-	read(fd, *buffer + *offset, BUFFER_SIZE);
-	return *buffer;
+	free(*buffer);
+	*buffer = NULL;
+	return NULL;
 }
