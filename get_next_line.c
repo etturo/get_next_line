@@ -6,7 +6,7 @@
 /*   By: eturini <eturini@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/14 17:43:33 by eturini           #+#    #+#             */
-/*   Updated: 2025/12/14 17:55:51 by eturini          ###   ########.fr       */
+/*   Updated: 2025/12/14 18:02:47 by eturini          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,8 @@ char	*get_line(char **stash)
 	i = -1;
 	while (++i < nl_len)
 		buffer[i] = (*stash)[i];
-	buffer[i++] = '\n';
+	if (find_nl(*stash) != -1)
+		buffer[i++] = '\n';
 	buffer[i] = '\0';
 	set_next_stash(stash);
 	return buffer;
@@ -99,13 +100,13 @@ char	*set_next_stash(char **stash)
 	return NULL;
 }
 
-#include <fcntl.h>
+/* #include <fcntl.h>
 
 int main(){
 	int fd;
 	char *line;
 
-	if ((fd = open("41_no_nl", O_RDONLY)) == -1)
+	if ((fd = open("files/41_no_nl", O_RDONLY)) == -1)
 		return -1;
 	while ((line = get_next_line(fd)) != NULL)
 	{
@@ -115,3 +116,4 @@ int main(){
 	}
 	printf("\n");
 }
+ */
