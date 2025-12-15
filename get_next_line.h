@@ -6,7 +6,7 @@
 /*   By: eturini <eturini@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/08 17:32:55 by eturini           #+#    #+#             */
-/*   Updated: 2025/12/14 18:31:13 by eturini          ###   ########.fr       */
+/*   Updated: 2025/12/15 16:27:17 by eturini          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,6 @@ char	*get_line(char **stash);
 char	*set_next_stash(char **stash);
 char	*ft_strjoin(char *s1, char *s2);
 char	*free_for_all(char **buffer);
-int		find_nl(char *s);
+long	find_nl(char *s);
 
 #endif

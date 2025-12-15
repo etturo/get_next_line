@@ -6,7 +6,7 @@
 /*   By: eturini <eturini@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/14 17:43:51 by eturini           #+#    #+#             */
-/*   Updated: 2025/12/14 21:37:50 by eturini          ###   ########.fr       */
+/*   Updated: 2025/12/15 16:27:12 by eturini          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,9 +40,9 @@ char	*ft_strjoin(char *s1, char *s2)
 	return (new_s);
 }
 
-int	find_nl(char *s)
+long	find_nl(char *s)
 {
-	size_t	i;
+	long	i;
 
 	if (!s)
 		return (-1);
