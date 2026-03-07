@@ -1,3 +1,15 @@
+# Give Up GitHub
+
+This project has given up GitHub. (See [Software Freedom Conservancy's Give Up GitHub site](https://giveupgithub.org/) for details.)
+
+You can now find this project at https://codeberg.org/etturo/get_next_line instead.
+
+Any use of this project's code by GitHub Copilot, past or present, is done without our permission. We do not consent to GitHub's use of this project's code in Copilot.
+
+Join us; you can [give up GitHub](https://giveupgithub.org/) too!
+
+---
+
 *This project has been created as part of the 42 curriculum by eturini.*
 
 # Get Next Line
@@ -43,13 +55,15 @@ close(fd);
 The algorithm implemented relies on the use of a **static variable** (`stash`) to persist data between function calls. This is crucial because `get_next_line` may be called multiple times, and any data read from the file but not yet returned (because it was after the newline) must be saved for the next call.
 
 ### Steps:
-1.  **Read & Accumulate:** The function reads `BUFFER_SIZE` bytes from the file descriptor into a temporary buffer. This buffer is immediately appended to the static `stash` string using `ft_strjoin`. This process repeats in a loop until a newline character (`\n`) is found in the stash or the End of File (EOF) is reached.
+1.  **Read & Accumulate:** The function reads `BUFFER_SIZE` bytes from the file descriptor into a temporary buffer. This buffer is immediately appended to the static `stash` string using `ft_strjoin`. This process repeats in a loop until a newline character (`
+`) is found in the stash or the End of File (EOF) is reached.
 2.  **Extract Line:** Once a newline is detected (or EOF), the function identifies the substring from the start of the `stash` up to and including the newline. This substring is allocated and returned as the result.
 3.  **Update Stash:** The remaining part of the `stash` (everything after the newline) is saved. A new string is allocated for this remainder, the old `stash` is freed, and the static pointer is updated to point to the new remainder.
 
 ### Justification:
 This "String Stash" approach was selected for its **readability and simplicity**. By treating the accumulated data as a standard C string, we can utilize familiar string manipulation logic. While this approach involves repeated memory allocation and copying (which can be slower with extremely small buffer sizes), it provides a robust and easy-to-debug solution for standard use cases, ensuring no memory leaks occur through careful management of the static pointer.
-It would have been better if I had used linked list, because in every node i would have stored the red buffer, and only when a `EOF` or a `\n` is found the copy starts, using only one copy per line and not every iteration.
+It would have been better if I had used linked list, because in every node i would have stored the red buffer, and only when a `EOF` or a `
+` is found the copy starts, using only one copy per line and not every iteration.
 
 ## Bonus Part
 
